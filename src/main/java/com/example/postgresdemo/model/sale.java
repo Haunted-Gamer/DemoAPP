@@ -1,9 +1,10 @@
-package com.example.iceFrog.model;
+package com.example.postgresdemo.model;
+
 import java.time.LocalDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+
 
 @Entity
 @Table(name = "sale")
@@ -12,12 +13,12 @@ public class sale {
 
 	@NotBlank
 	@Column(unique = true)
+	@Id
 	private LocalDate date ;
 	
 	
 
 	@NotBlank
-	@Column(unique = true)
 	private short loc_id;
 	
 	private int sales;

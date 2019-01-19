@@ -1,17 +1,13 @@
-package com.example.iceFrog.DemoAPP;
+package com.example.postgresdemo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
 @EnableJpaAuditing
-public class DemoAppApplication {
-
+public class PostgresDemoApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(DemoAppApplication.class, args);
+		SpringApplication.run(PostgresDemoApplication.class, args);
 	}
-
 }
-

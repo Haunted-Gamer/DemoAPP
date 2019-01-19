@@ -1,5 +1,6 @@
-package com.example.iceFrog.model;
+package com.example.postgresdemo.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -7,9 +8,10 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "Calendar")
-public class Calendar {
+public class Calendar implements Serializable {
 	@NotBlank
 	@Column(unique = true)
+	@Id
 	private LocalDate date ;
 	
 	@Column(columnDefinition = "text")

@@ -1,12 +1,13 @@
-package com.example.iceFrog.model;
+package com.example.postgresdemo.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+
 @Entity
 @Table(name = "Geography")
 public class Geography {
 	@NotBlank
 	@Column(unique = true)
+	@Id
 	private short loc_id;
 	
 	 @Column(columnDefinition = "text")
