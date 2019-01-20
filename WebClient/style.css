@@ -1,0 +1,32 @@
+
+.header{
+    background-color:#0056b3;
+    padding: 15px;
+
+}
+.header h1{
+    color: #ffffff;
+}
+.input-wrapper{
+    padding: 15px;
+    border: 1px solid #0056b3;
+    margin: 15px 0px 15px 0px;
+}
+.input-title{
+    color: #0056b3;
+    font-size: 15px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.content-title{
+    background-color: #74b9ff;
+    color: #ffffff;
+    padding: 15px;
+}
+.content-title a {
+    color:#ffffff;
+    padding-right:15px; 
+}
+.content-title a i{
+    font-size: 30px;
+}

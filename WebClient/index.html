@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!--font Awesome-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <title>Deshboard</title>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col text-center">
+          <div class="header">
+              <h1>One Page Web API Client</h1>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-2" height="600" >
+          
+            <div class="form-group row input-wrapper">
+              <div class="col-5 input-title">Calendar</div>
+              <div class="col-8">
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="calendar1" name="calendar1" value="day">
+                  <label class="custom-control-label" for="calendar1">Day</label>              
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="calendar2" name="calendar2" value="date">
+                  <label class="custom-control-label" for="calendar2">Date</label>              
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="calendar3" name="calendar3" value="mounth">
+                  <label class="custom-control-label" for="calendar3">Mounth</label>              
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="calendar4" name="calendar4" value="quarter">
+                  <label class="custom-control-label" for="calendar4">Quarter</label>              
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="calendar5" name="calendar5" value="year">
+                  <label class="custom-control-label" for="calendar5">Year</label>              
+                </div>
+              </div>
+            </div>
+            <div class="form-group row input-wrapper">
+              <div class="col-5 input-title">Geography</div>
+              <div class="col-8">
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="geography1" name="geography1" value="thana">
+                  <label class="custom-control-label" for="geography1">Thana</label>              
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="geography2" name="geography2" value="district">
+                  <label class="custom-control-label" for="geography2">District</label>              
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="geography3" name="geography3" value="division">
+                  <label class="custom-control-label" for="geography3">Division</label>              
+                </div>
+              </div>
+            </div>
+            <div class="form-group row input-wrapper">
+              <div class="col-5 input-title">Sales</div>
+              <div class="col-8">
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="measure" name="measure" value="statement ">
+                  <label class="custom-control-label" for="measure">Sales Amount</label>
+                </div>
+              </div>
+            </div>
+            <div class="submit-btn">
+              <input type="submit"  value="Submit" class="btn btn-primary btn-block" onclick="CheckCheckboxStatus()">
+            </div>           
+        </form>
+        </div>
+        <div class="col-10">
+          <div class="content-title">
+            <a href="#" data-toggle="tooltip" data-placement="top" title="Table View"><i class="fas fa-table"></i></a> <a href="#" data-toggle="tooltip" data-placement="top" title="Chart View"><i class="fas fa-chart-line"></i></a>
+          </div>
+          <div class="row">
+              <div class="col">
+                <table border="1" cellpadding="7" id="records_table">
+                 
+                </table>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+	<script>
+	
+      
+	  
+	function CheckCheckboxStatus() {
+            $("#records_table tr").remove(); 
+    var xhr = new XMLHttpRequest();
+    var url = "http://localhost:8080/Calendar/quarter/Q1";
+    xhr.open("GET", url);
+        xhr.timeout=5000;
+    xhr.onreadystatechange = function() {
+
+        if (xhr.status === 200 && xhr.readyState === 4) {
+            response=$.parseJSON(xhr.responseText);
+			
+			$(function() {
+    $.each(response, function(i, item) {
+        
+        var $tr = 
+            $('<tr>').append(
+            $('<td>').text(item.date),
+            $('<td>').text(item.quarter),
+            $('<td>').text(item.day)
+        ).
+		appendTo('#records_table')
+        console.log($tr.wrap('<p>').html());
+    });
+});
+
+        }
+    }
+    xhr.send();
+	}
+	
+ 
+	 
+    </script>
+  </body>
+</html>
