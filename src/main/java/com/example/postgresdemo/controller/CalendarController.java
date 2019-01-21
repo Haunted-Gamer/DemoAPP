@@ -27,4 +27,11 @@ public class CalendarController {
         return calendarRepository.findByQuarter(quarterValue);
     }
     
+    @GetMapping("Calendar/sale")
+    public List<Object[]> getCalendarSale() {
+        return calendarRepository.salesByDate();
+    }
+   
+    
+    
 }

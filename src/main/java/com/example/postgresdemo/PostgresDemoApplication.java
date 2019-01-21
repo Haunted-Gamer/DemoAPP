@@ -9,5 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 public class PostgresDemoApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PostgresDemoApplication.class, args);
+		System.out.println(org.hibernate.Version.getVersionString());
 	}
 }
+

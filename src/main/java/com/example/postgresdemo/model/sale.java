@@ -14,6 +14,8 @@ public class sale {
 	@NotBlank
 	@Column(unique = true)
 	@Id
+	private int saleid;
+	
 	private LocalDate date ;
 	
 	

@@ -12,7 +12,11 @@ import org.springframework.stereotype.Repository;
 public interface CalendarRepository extends JpaRepository<Calendar, Long> {
 	  List<Calendar> findAll();
 	  
-	  @Query(value = "SELECT * FROM Calendar WHERE quarter = ?1", nativeQuery = true)
-	  
+	  @Query(value = "SELECT * FROM Calendar", nativeQuery = true)
 	  List<Calendar> findByQuarter(String quartervalue);
+	  
+	  @Query(value = "SELECT date,district FROM Calendar,Geography", nativeQuery = true)
+	  List<Object[]> salesByDate();
+	  
+	  
 }

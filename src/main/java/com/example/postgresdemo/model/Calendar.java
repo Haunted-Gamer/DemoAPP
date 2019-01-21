@@ -14,15 +14,6 @@ public class Calendar implements Serializable {
 	@Id
 	private LocalDate date ;
 	
-	public Calendar(@NotBlank LocalDate date, String day, String month, String quarter, String year) {
-		super();
-		this.date = date;
-		this.day = day;
-		this.month = month;
-		this.quarter = quarter;
-		this.year = year;
-	}
-
 	@Column(columnDefinition = "text")
 	private String day;
 	@Column(columnDefinition = "text")
