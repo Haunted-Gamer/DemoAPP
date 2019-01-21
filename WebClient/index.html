@@ -46,8 +46,8 @@ table { table-layout: fixed; }
                   <label class="custom-control-label" for="calendar2">Date</label>              
                 </div>
                 <div class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" id="calendar3" name="calendar3" value="mounth">
-                  <label class="custom-control-label" for="calendar3">Mounth</label>              
+                  <input type="checkbox" class="custom-control-input" id="calendar3" name="calendar3" value="month">
+                  <label class="custom-control-label" for="calendar3">Month</label>              
                 </div>
                 <div class="custom-control custom-checkbox">
                   <input type="checkbox" class="custom-control-input" id="calendar4" name="calendar4" value="quarter">
@@ -111,55 +111,322 @@ table { table-layout: fixed; }
     
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
 	<script>
+        
+        
+        
 	
-      
-	  
 	function CheckCheckboxStatus() {
+        // geography all
+        if (
+            document.getElementById("calendar2").checked == false && 
+            document.getElementById("measure").checked == false &&
+            document.getElementById("calendar1").checked == false &&
+            document.getElementById("calendar3").checked == false &&
+            document.getElementById("calendar4").checked == false &&
+            document.getElementById("calendar5").checked == false &&
+            document.getElementById("geography1").checked == true &&
+            document.getElementById("geography2").checked == true &&
+            document.getElementById("geography3").checked == true   
+        ){
+            
             $("#records_table tr").remove(); 
     var xhr = new XMLHttpRequest();
-    var url = "http://localhost:8080/Calendar/quarter/Q1";
+    var url = "http://localhost:8080/Geography";
     xhr.open("GET", url);
         xhr.timeout=5000;
     xhr.onreadystatechange = function() {
-
         if (xhr.status === 200 && xhr.readyState === 4) {
-            alert(xhr.responseText);
             response=$.parseJSON(xhr.responseText);
-			
 			$(function() {
     $.each(response, function(i, item) {
-        
         var $tr = 
             $('<tr>').append(
-            $('<td>').text(item.date),
-            $('<td>').text(item.quarter),
-            $('<td>').text(item.day)
+            $('<td>').text(item.thana),
+                $('<td>').text(item.district),
+            $('<td>').text(item.division)
         ).
 		appendTo('#records_table')
         console.log($tr.wrap('<p>').html());
-        
-    });
-                
+    });                
      var $lol = $('<tr>').append(
-            $('<td>').text("date"),
-            $('<td>').text("quarter"),
-            $('<td>').text("day")
+            $('<td>').text("thana"),
+            $('<td>').text("district"),
+            $('<td>').text("division")
         ).
 		prependTo('#records_table');       
           console.log($lol.wrap('<p>').html());
-
-
-                
+                });
+            }
+    }
+    xhr.send(); 
+        }
+        // CALENDAR ALL
+        if (
+            document.getElementById("calendar2").checked == true && 
+            document.getElementById("measure").checked == false &&
+            document.getElementById("calendar1").checked == true &&
+            document.getElementById("calendar3").checked == true &&
+            document.getElementById("calendar4").checked == true &&
+            document.getElementById("calendar5").checked == true &&
+            document.getElementById("geography1").checked == false &&
+            document.getElementById("geography2").checked == false &&
+            document.getElementById("geography3").checked == false   
+        ){
+           $("#records_table tr").remove(); 
+    var xhr = new XMLHttpRequest();
+    var url = "http://localhost:8080/Calendar";
+    xhr.open("GET", url);
+        xhr.timeout=5000;
+    xhr.onreadystatechange = function() {
+        if (xhr.status === 200 && xhr.readyState === 4) {
+            response=$.parseJSON(xhr.responseText);
+			$(function() {
+    $.each(response, function(i, item) {
+        var $tr = 
+            $('<tr>').append(
+            $('<td>').text(item.date),
+                $('<td>').text(item.day),
+            $('<td>').text(item.month),
+            $('<td>').text(item.quarter),
+                $('<td>').text(item.year)
+        ).
+		appendTo('#records_table')
+        console.log($tr.wrap('<p>').html());
+    });                
+     var $lol = $('<tr>').append(
+            $('<td>').text("date"),
+            $('<td>').text("day"),
+            $('<td>').text("month"),
+          $('<td>').text("quarter"),
+          $('<td>').text("year")
+        ).
+		prependTo('#records_table');       
+          console.log($lol.wrap('<p>').html());
+                });
+            }
+    }
+    xhr.send(); 
+}
+        //DATE & SALES AMOUNT
+        if (
+            document.getElementById("calendar2").checked == true && 
+            document.getElementById("measure").checked == true &&
+            document.getElementById("calendar1").checked == false &&
+            document.getElementById("calendar3").checked == false &&
+            document.getElementById("calendar4").checked == false &&
+            document.getElementById("calendar5").checked == false &&
+            document.getElementById("geography1").checked == false &&
+            document.getElementById("geography2").checked == false &&
+            document.getElementById("geography3").checked == false   
+        ){
+            $("#records_table tr").remove(); 
+    var xhr = new XMLHttpRequest();
+    var url = "http://localhost:8080/Sales/date";
+    xhr.open("GET", url);
+        xhr.timeout=5000;
+    xhr.onreadystatechange = function() {
+    if (xhr.status === 200 && xhr.readyState === 4) {
+	ResponseToJson=$.parseJSON(xhr.responseText);
+	var headers = ['date','sales']
+		function createItem(item) {
+		newObject = {}
+		item.map((val,i)=>newObject[headers[i]]=val)
+		return newObject
+		}
+	mapping=ResponseToJson.map(item=>createItem(item))
+		var finalJSON=JSON.stringify(mapping);
+		<!-- result = nice.substring(1, nice.length-1); -->
+		console.log(mapping);
+		$(function() {
+    $.each(mapping, function(i, item) {
+        var $tr = 
+            $('<tr>').append(
+            $('<td>').text(item.date),
+            $('<td>').text(item.sales)
+        ).
+		appendTo('#records_table')
+        console.log($tr.wrap('<p>').html());
+    });
+     var $lol = $('<tr>').append(
+            $('<td>').text("date"),
+            $('<td>').text("sales")
+        ).
+		prependTo('#records_table');       
+          console.log($lol.wrap('<p>').html());         
 });
-
         }
     }
     xhr.send();
-	}
-	
-	
- 
-	 
+            
+            
+        }
+        // DAY , QUARTER, SALES AMOUNT
+        if (
+            document.getElementById("calendar2").checked == false && 
+            document.getElementById("measure").checked == true &&
+            document.getElementById("calendar1").checked == true &&
+            document.getElementById("calendar3").checked == false &&
+            document.getElementById("calendar4").checked == true &&
+            document.getElementById("calendar5").checked == false &&
+            document.getElementById("geography1").checked == false &&
+            document.getElementById("geography2").checked == false &&
+            document.getElementById("geography3").checked == false   
+        ){
+            $("#records_table tr").remove(); 
+    var xhr = new XMLHttpRequest();
+    var url = "http://localhost:8080/Sales/day/quarter";
+    xhr.open("GET", url);
+        xhr.timeout=5000;
+    xhr.onreadystatechange = function() {
+    if (xhr.status === 200 && xhr.readyState === 4) {
+	ResponseToJson=$.parseJSON(xhr.responseText);
+	var headers = ['day','quarter','sales']
+		function createItem(item) {
+		newObject = {}
+		item.map((val,i)=>newObject[headers[i]]=val)
+		return newObject
+		}
+	mapping=ResponseToJson.map(item=>createItem(item))
+		var finalJSON=JSON.stringify(mapping);
+		<!-- result = nice.substring(1, nice.length-1); -->
+		console.log(mapping);
+		$(function() {
+    $.each(mapping, function(i, item) {
+        var $tr = 
+            $('<tr>').append(
+            $('<td>').text(item.quarter),
+            $('<td>').text(item.day),
+            $('<td>').text(item.sales)
+        ).
+		appendTo('#records_table')
+        console.log($tr.wrap('<p>').html());
+    });
+     var $lol = $('<tr>').append(
+            $('<td>').text("quarter"),
+            $('<td>').text("day"),
+            $('<td>').text("sales")
+        ).
+		prependTo('#records_table');       
+          console.log($lol.wrap('<p>').html());         
+});
+        }
+    }
+    xhr.send();
+        }
+        
+        
+        
+        //  QUARTER, SALES AMOUNT
+        if (
+            document.getElementById("calendar2").checked == false && 
+            document.getElementById("measure").checked == true &&
+            document.getElementById("calendar1").checked == false &&
+            document.getElementById("calendar3").checked == false &&
+            document.getElementById("calendar4").checked == true &&
+            document.getElementById("calendar5").checked == false &&
+            document.getElementById("geography1").checked == false &&
+            document.getElementById("geography2").checked == false &&
+            document.getElementById("geography3").checked == false   
+        ){
+            
+            $("#records_table tr").remove(); 
+    var xhr = new XMLHttpRequest();
+    var url = "http://localhost:8080/Sales/quarter";
+    xhr.open("GET", url);
+        xhr.timeout=5000;
+    xhr.onreadystatechange = function() {
+    if (xhr.status === 200 && xhr.readyState === 4) {
+	ResponseToJson=$.parseJSON(xhr.responseText);
+	var headers = ['quarter','sales']
+		function createItem(item) {
+		newObject = {}
+		item.map((val,i)=>newObject[headers[i]]=val)
+		return newObject
+		}
+	mapping=ResponseToJson.map(item=>createItem(item))
+		var finalJSON=JSON.stringify(mapping);
+		<!-- result = nice.substring(1, nice.length-1); -->
+		console.log(mapping);
+		$(function() {
+    $.each(mapping, function(i, item) {
+        var $tr = 
+            $('<tr>').append(
+            $('<td>').text(item.quarter),
+            $('<td>').text(item.sales)
+        ).
+		appendTo('#records_table')
+        console.log($tr.wrap('<p>').html());
+    });
+     var $lol = $('<tr>').append(
+            $('<td>').text("quarter"),
+            $('<td>').text("sales")
+        ).
+		prependTo('#records_table');       
+          console.log($lol.wrap('<p>').html());         
+});
+        }
+    }
+    xhr.send();
+            
+        }
+        
+        
+        //  THANA, SALES AMOUNT
+        if (
+            document.getElementById("calendar2").checked == false && 
+            document.getElementById("measure").checked == true &&
+            document.getElementById("calendar1").checked == false &&
+            document.getElementById("calendar3").checked == false &&
+            document.getElementById("calendar4").checked == false &&
+            document.getElementById("calendar5").checked == false &&
+            document.getElementById("geography1").checked == true &&
+            document.getElementById("geography2").checked == false &&
+            document.getElementById("geography3").checked == false   
+        ){
+            $("#records_table tr").remove(); 
+    var xhr = new XMLHttpRequest();
+    var url = "http://localhost:8080/Sales/thana";
+    xhr.open("GET", url);
+        xhr.timeout=5000;
+    xhr.onreadystatechange = function() {
+    if (xhr.status === 200 && xhr.readyState === 4) {
+	ResponseToJson=$.parseJSON(xhr.responseText);
+	var headers = ['thana','sales']
+		function createItem(item) {
+		newObject = {}
+		item.map((val,i)=>newObject[headers[i]]=val)
+		return newObject
+		}
+	mapping=ResponseToJson.map(item=>createItem(item))
+		var finalJSON=JSON.stringify(mapping);
+		<!-- result = nice.substring(1, nice.length-1); -->
+		console.log(mapping);
+		$(function() {
+    $.each(mapping, function(i, item) {
+        var $tr = 
+            $('<tr>').append(
+            $('<td>').text(item.thana),
+            $('<td>').text(item.sales)
+        ).
+		appendTo('#records_table')
+        console.log($tr.wrap('<p>').html());
+    });
+     var $lol = $('<tr>').append(
+            $('<td>').text("thana"),
+            $('<td>').text("sales")
+        ).
+		prependTo('#records_table');       
+          console.log($lol.wrap('<p>').html());         
+});
+        }
+    }
+    xhr.send();
+            
+            
+        }
+        
+}	
+
     </script>
   </body>
 </html>
