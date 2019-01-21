@@ -92,8 +92,10 @@ table { table-layout: fixed; }
         </div>
         <div class="col-10">
           <div class="content-title">
-            <a href="#" data-toggle="tooltip" data-placement="top" title="Table View"><i class="fas fa-table"></i></a> <a href="#" data-toggle="tooltip" data-placement="top" title="Chart View"><i class="fas fa-chart-line"></i></a>
+            <a href="#" data-toggle="tooltip" data-placement="top" title="Table View" onclick="CheckCheckboxStatus()"><i class="fas fa-table"></i></a> 
+			<a href="#" data-toggle="tooltip" data-placement="top" title="Chart View" onclick="ChartView()"><i class="fas fa-chart-line"></i></a>
           </div>
+		  <div id = "container" ></div>
                           <table id="records_table">
                  
                 </table>
@@ -110,12 +112,104 @@ table { table-layout: fixed; }
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
     
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+	<script src = "https://code.highcharts.com/highcharts.js"></script> 
 	<script>
-        
-        
-        
-	
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
+        function ChartView(){
+		if (
+            document.getElementById("calendar2").checked == false && 
+            document.getElementById("measure").checked == true &&
+            document.getElementById("calendar1").checked == false &&
+            document.getElementById("calendar3").checked == false &&
+            document.getElementById("calendar4").checked == true &&
+            document.getElementById("calendar5").checked == false &&
+            document.getElementById("geography1").checked == false &&
+            document.getElementById("geography2").checked == false &&
+            document.getElementById("geography3").checked == false   
+        ){
+		$("#records_table tr").remove(); 
+    var xhr = new XMLHttpRequest();
+    var url = "http://localhost:8080/Sales/quarter";
+    xhr.open("GET", url);
+        xhr.timeout=5000;
+    xhr.onreadystatechange = function() {
+    if (xhr.status === 200 && xhr.readyState === 4) {
+	ResponseToJson=$.parseJSON(xhr.responseText);
+	var headers = ['quarter','sales']
+		function createItem(item) {
+		newObject = {}
+		item.map((val,i)=>newObject[headers[i]]=val)
+		return newObject
+		}
+	mapping=ResponseToJson.map(item=>createItem(item))
+		var finalJSON=JSON.stringify(mapping);
+		var xValue = [];
+		var yValue = [];
+            $(function() {
+    $.each(mapping, function(i, item) {
+        xValue.push(item.quarter);
+		yValue.push(item.sales);
+       
+    });
+		var title = {
+               text: 'Sales By Quarter'   
+            };
+            var subtitle = {
+               text: 'DemoTEST'
+            };
+            var xAxis = {
+               categories: xValue
+            };
+            var yAxis = {
+               title: {
+                  text: 'Sales'
+               },
+               plotLines: [{
+                  value: 0,
+                  width: 1,
+                  color: '#808080'
+               }]
+            };   
+            var tooltip = {
+               valueSuffix: 'BDT'
+            }
+            var legend = {
+               layout: 'vertical',
+               align: 'right',
+               verticalAlign: 'middle',
+               borderWidth: 0
+            };
+            var series =  [{
+                 name:'Sales',
+                  data: yValue
+               } 
+               
+            ];
+
+			
+            var json = {};
+            json.title = title;
+            json.subtitle = subtitle;
+            json.xAxis = xAxis;
+            json.yAxis = yAxis;
+            json.tooltip = tooltip;
+            json.legend = legend;
+            json.series = series;
+            
+            $('#container').highcharts(json);
+});
+		
+		
+        }
+    }
+    xhr.send();
+			
+		}
+        }
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	function CheckCheckboxStatus() {
+	
+	
         // geography all
         if (
             document.getElementById("calendar2").checked == false && 
