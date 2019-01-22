@@ -96,7 +96,7 @@ table { table-layout: fixed; }
 			<a href="#" data-toggle="tooltip" data-placement="top" title="Chart View" onclick="ChartView()"><i class="fas fa-chart-line"></i></a>
           </div>
 		  <div id = "container" ></div>
-                          <table id="records_table">
+                        <table id="records_table">
                  
                 </table>
               </div>
@@ -128,6 +128,7 @@ table { table-layout: fixed; }
             document.getElementById("geography3").checked == false   
         ){
 		$("#records_table tr").remove(); 
+		$('#container').fadeIn();
     var xhr = new XMLHttpRequest();
     var url = "http://localhost:8080/Sales/quarter";
     xhr.open("GET", url);
@@ -208,7 +209,7 @@ table { table-layout: fixed; }
         }
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	function CheckCheckboxStatus() {
-	
+	$('#container').fadeOut();
 	
         // geography all
         if (
